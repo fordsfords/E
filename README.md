@@ -7,6 +7,7 @@ Simple set of macros for primitive error handling.
 &bull; [E](#e)  
 &bull; [Table of contents](#table-of-contents)  
 &bull; [Introduction](#introduction)  
+&bull; [Macros](#macros)  
 &bull; [License](#license)  
 <!-- TOC created by '../mdtoc/mdtoc.pl README.md' (see https://github.com/fordsfords/mdtoc) -->
 <!-- mdtoc-end -->
@@ -14,7 +15,39 @@ Simple set of macros for primitive error handling.
 
 # Introduction
 
-The macros defined in e.h
+The file e.h defines a very simple set of error checking macros intended
+primarily for Linux system/libc functions that set "errno".
+
+The general intended use is to enclose the function call as a parameter
+of the macro.
+For example:
+````
+ENULL(my_ptr = malloc(sizeof(my_type)));
+````
+This will call malloc, assigning its return pointer to `my_ptr`.
+If the result in NULL, it prints an error message to stderr and exits
+with a status of 1.
+
+As part of the error message, it lists the source file name and line
+number, and also the text of the macro's input parameter, and a short
+description of what `errno` is set to.
+
+For example, given line 9 in file "x.c":
+````
+  ENULL(ptr = malloc(0x1fffffffffffffff));
+````
+produces this output:
+````
+Error x.c:9 - 'ptr = malloc(0x1fffffffffffffff)' is NULL: Cannot allocate memory
+````
+
+
+# Macros
+
+* `EOK0` - Error if result is non-zero.
+* `EOK1` - Error if result is not 1.
+* `ENULL` - Error if result is NULL.
+* `EM1` - Error if result is -1.
 
 
 # License
