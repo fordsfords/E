@@ -50,6 +50,16 @@ Error x.c:9 - 'ptr = malloc(0x1fffffffffffffff)' is NULL: Cannot allocate memory
 * `EM1` - Error if result is -1.
 
 
+# Coding Notes
+
+The source file `tst.c` is intentionally very simple.
+It does not include any header files except `e.h`.
+This is to ensure that the header files included by `e.h` are
+sufficient for everything that `e.h` subsequently uses.
+For example, `e.h` uses `perror()`.
+Building tst.c ensures that `e.h` includes `errno.h`.
+
+
 # License
 
 I want there to be NO barriers to using this code, so I am releasing it to the public domain.  But "public domain" does not have an internationally agreed upon definition, so I use CC0:
